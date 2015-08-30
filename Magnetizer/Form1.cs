@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Magnetizer {
     public partial class Form1 : Form {
@@ -16,7 +17,23 @@ namespace Magnetizer {
 
             // Set default values
             this.txtHash.Text = "B05930182B4FC941E73A4278FC612D154D5A822B";
-            this.txtTrackers.Text = "udp://tracker.openbittorrent.com:80/announce" + System.Environment.NewLine + "udp://tracker.publicbt.com:80/announce";
+
+            // Overwrite default trackers with ones in this file, if present
+            if(File.Exists("trackers.txt")) {
+                StreamReader reader = new StreamReader("trackers.txt");
+                string[] trackers = reader.ReadToEnd().Replace(System.Environment.NewLine, "\n").Split('\n');
+                reader.Close();
+
+                // Make sure input is valid
+                foreach(string tr in trackers) {
+                    if(trackercheck.IsMatch(tr))
+                        this.txtTrackers.Text += tr + System.Environment.NewLine;
+                }
+            } else {
+                this.txtTrackers.Text = "udp://tracker.openbittorrent.com:80/announce"
+                    + System.Environment.NewLine + "udp://tracker.publicbt.com:80/announce";
+            }
+
             // Update magnet link text box
             Input_TextChanged();
 
