@@ -31,7 +31,9 @@ namespace Magnetizer {
                 }
             } else {
                 this.txtTrackers.Text = "udp://tracker.openbittorrent.com:80/announce"
-                    + System.Environment.NewLine + "udp://tracker.publicbt.com:80/announce";
+                    + System.Environment.NewLine + "udp://open.demonii.com:1337"
+                    + System.Environment.NewLine + "udp://tracker.coppersurfer.tk:6969"
+                    + System.Environment.NewLine + "udp://tracker.leechers-paradise.org:6969";
             }
 
             // Update magnet link text box
